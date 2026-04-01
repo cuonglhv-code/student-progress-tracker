@@ -435,7 +435,7 @@ export default function App() {
                 ))}
               </div>
 
-              {/* Charts Grid */}
+             {/* Charts Grid */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 {/* Band Progress */}
                 <Card className="p-6">
@@ -443,17 +443,24 @@ export default function App() {
                     <h3 className="text-lg font-bold text-slate-800">Student Band Progress</h3>
                     <TrendingUp size={20} className="text-indigo-600" />
                   </div>
-                  <div className="h-[300px]">
-                    <ResponsiveContainer width="100%" height="100%">
-                      <LineChart data={charts.progressData}>
-                        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-                        <XAxis dataKey="date" axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 12 }} />
-                        <YAxis axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 12 }} domain={[0, 9]} />
-                        <Tooltip contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)' }} />
-                        <Legend iconType="circle" />
-                        <Line name="Overall" type="monotone" dataKey="overall" stroke="#4f46e5" strokeWidth={3} dot={{ r: 4, fill: '#4f46e5' }} />
-                      </LineChart>
-                    </ResponsiveContainer>
+                  <div className="h-[300px] flex items-center justify-center">
+                    {charts.progressData.length > 0 ? (
+                      <ResponsiveContainer width="100%" height="100%">
+                        <LineChart data={charts.progressData}>
+                          <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
+                          <XAxis dataKey="date" axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 12 }} />
+                          <YAxis axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 12 }} domain={[0, 9]} />
+                          <Tooltip contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)' }} />
+                          <Legend iconType="circle" />
+                          <Line name="Overall" type="monotone" dataKey="overall" stroke="#4f46e5" strokeWidth={3} dot={{ r: 4, fill: '#4f46e5' }} />
+                        </LineChart>
+                      </ResponsiveContainer>
+                    ) : (
+                      <div className="text-center space-y-2">
+                        <Activity className="mx-auto text-slate-200" size={48} />
+                        <p className="text-slate-400 text-sm font-medium">No progress data available yet</p>
+                      </div>
+                    )}
                   </div>
                 </Card>
 
@@ -463,16 +470,23 @@ export default function App() {
                     <h3 className="text-lg font-bold text-slate-800">Skills Comparison</h3>
                     <Activity size={20} className="text-indigo-600" />
                   </div>
-                  <div className="h-[300px]">
-                    <ResponsiveContainer width="100%" height="100%">
-                      <RadarChart cx="50%" cy="50%" outerRadius="80%" data={charts.avgSkills}>
-                        <PolarGrid stroke="#e2e8f0" />
-                        <PolarAngleAxis dataKey="subject" tick={{ fill: '#64748b', fontSize: 12 }} />
-                        <PolarRadiusAxis angle={30} domain={[0, 9]} tick={false} axisLine={false} />
-                        <Radar name="Avg Skills" dataKey="A" stroke="#6366f1" fill="#6366f1" fillOpacity={0.6} />
-                        <Tooltip />
-                      </RadarChart>
-                    </ResponsiveContainer>
+                  <div className="h-[300px] flex items-center justify-center">
+                    {charts.avgSkills.length > 0 ? (
+                      <ResponsiveContainer width="100%" height="100%">
+                        <RadarChart cx="50%" cy="50%" outerRadius="80%" data={charts.avgSkills}>
+                          <PolarGrid stroke="#e2e8f0" />
+                          <PolarAngleAxis dataKey="subject" tick={{ fill: '#64748b', fontSize: 12 }} />
+                          <PolarRadiusAxis angle={30} domain={[0, 9]} tick={false} axisLine={false} />
+                          <Radar name="Avg Skills" dataKey="A" stroke="#6366f1" fill="#6366f1" fillOpacity={0.6} />
+                          <Tooltip />
+                        </RadarChart>
+                      </ResponsiveContainer>
+                    ) : (
+                      <div className="text-center space-y-2">
+                        <PieChartIcon className="mx-auto text-slate-200" size={48} />
+                        <p className="text-slate-400 text-sm font-medium">No results to compare</p>
+                      </div>
+                    )}
                   </div>
                 </Card>
 
@@ -482,16 +496,23 @@ export default function App() {
                     <h3 className="text-lg font-bold text-slate-800">Avg Band by Class</h3>
                     <BarChart3 size={20} className="text-indigo-600" />
                   </div>
-                  <div className="h-[300px]">
-                    <ResponsiveContainer width="100%" height="100%">
-                      <BarChart data={charts.classData}>
-                        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-                        <XAxis dataKey="name" axisLine={false} tickLine={false} />
-                        <YAxis axisLine={false} tickLine={false} domain={[0, 9]} />
-                        <Tooltip />
-                        <Bar dataKey="avg" fill="#818cf8" radius={[8, 8, 0, 0]} />
-                      </BarChart>
-                    </ResponsiveContainer>
+                  <div className="h-[300px] flex items-center justify-center">
+                    {charts.classData.length > 0 ? (
+                      <ResponsiveContainer width="100%" height="100%">
+                        <BarChart data={charts.classData}>
+                          <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
+                          <XAxis dataKey="name" axisLine={false} tickLine={false} />
+                          <YAxis axisLine={false} tickLine={false} domain={[0, 9]} />
+                          <Tooltip />
+                          <Bar dataKey="avg" fill="#818cf8" radius={[8, 8, 0, 0]} />
+                        </BarChart>
+                      </ResponsiveContainer>
+                    ) : (
+                      <div className="text-center space-y-2">
+                        <BarChart3 className="mx-auto text-slate-200" size={48} />
+                        <p className="text-slate-400 text-sm font-medium">No class data found</p>
+                      </div>
+                    )}
                   </div>
                 </Card>
 
@@ -501,26 +522,33 @@ export default function App() {
                     <h3 className="text-lg font-bold text-slate-800">Attendance Distribution</h3>
                     <PieChartIcon size={20} className="text-indigo-600" />
                   </div>
-                  <div className="h-[300px]">
-                    <ResponsiveContainer width="100%" height="100%">
-                      <PieChart>
-                        <Pie
-                          data={charts.attDist}
-                          cx="50%"
-                          cy="50%"
-                          innerRadius={60}
-                          outerRadius={80}
-                          paddingAngle={5}
-                          dataKey="value"
-                        >
-                          {charts.attDist.map((entry, index) => (
-                            <Cell key={`cell-${index}`} fill={entry.color} />
-                          ))}
-                        </Pie>
-                        <Tooltip />
-                        <Legend verticalAlign="bottom" height={36}/>
-                      </PieChart>
-                    </ResponsiveContainer>
+                  <div className="h-[300px] flex items-center justify-center">
+                    {charts.attDist.length > 0 ? (
+                      <ResponsiveContainer width="100%" height="100%">
+                        <PieChart>
+                          <Pie
+                            data={charts.attDist}
+                            cx="50%"
+                            cy="50%"
+                            innerRadius={60}
+                            outerRadius={80}
+                            paddingAngle={5}
+                            dataKey="value"
+                          >
+                            {charts.attDist.map((entry, index) => (
+                              <Cell key={`cell-${index}`} fill={entry.color} />
+                            ))}
+                          </Pie>
+                          <Tooltip />
+                          <Legend verticalAlign="bottom" height={36}/>
+                        </PieChart>
+                      </ResponsiveContainer>
+                    ) : (
+                      <div className="text-center space-y-2">
+                        <CheckCircle2 className="mx-auto text-slate-200" size={48} />
+                        <p className="text-slate-400 text-sm font-medium">No attendance marked yet</p>
+                      </div>
+                    )}
                   </div>
                 </Card>
               </div>

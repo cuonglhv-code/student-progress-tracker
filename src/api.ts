@@ -12,9 +12,9 @@ import { dashboardService } from './services/dashboard';
  * New code should prefer using specific services or hooks.
  */
 export const api = {
-  async getData(): Promise<AppData> {
+  async getData(email?: string): Promise<AppData> {
     const [
-      { data: profiles },
+      { data: profilesData },
       students,
       classes,
       stats
@@ -24,8 +24,9 @@ export const api = {
       classService.getAllClasses(),
       dashboardService.getStats()
     ]);
+    const profiles = profilesData as any[];
 
-    // Fetch tracking data (potentially large, ideally this should be paginated/filtered in UI)
+    // Fetch tracking data
     const [attendance, homework, submissions, tests, testResults] = await Promise.all([
       supabase.from('attendance').select('*'),
       supabase.from('homework').select('*'),
@@ -35,7 +36,9 @@ export const api = {
     ]);
 
     const session = await supabase.auth.getSession();
-    const currentUserProfile = profiles?.find(p => p.id === session.data.session?.user.id);
+    const currentUserProfile = email 
+      ? profiles?.find(p => p.email === email)
+      : profiles?.find(p => p.id === session.data.session?.user.id);
 
     return {
       currentUser: currentUserProfile as unknown as User,
