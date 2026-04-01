@@ -1,0 +1,5 @@
+{
+  "name": "IELTS Student Progress Tracker Pro",
+  "description": "A production-ready management system for IELTS schools featuring role-based access, automated attendance, homework tracking, and longitudinal test analytics.",
+  "requestFramePermissions": []
+}
